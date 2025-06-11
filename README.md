@@ -32,7 +32,7 @@
 cd your-directus-project
 
 # Install the extension via npm
-npm install directus-extension-hasura-sso-bridge
+npm install @mayademcom/directus-extension-hasura-sso-bridge
 
 # Restart Directus
 npm start
@@ -42,7 +42,7 @@ npm start
 
 ```bash
 # Clone or download the extension
-git clone https://github.com/yourusername/directus-extension-hasura-sso-bridge.git
+git clone https://github.com/mayademcom/directus-extension-hasura-sso-bridge.git
 
 # Navigate to your Directus project
 cd your-directus-project
