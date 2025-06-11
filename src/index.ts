@@ -1,5 +1,4 @@
 import type { DirectusUserData, HasuraUserInfo, SessionInfo } from "./types";
-import { ROLE_MAPPING, validateAndMapRole } from "./config/roles";
 import type { Request, Response, Router } from "express";
 import { ensureDirectusUser, getDirectusRoleId } from "./services/user";
 import {
@@ -9,10 +8,12 @@ import {
 } from "./auth/directus";
 import { getClientIP, getOrigin } from "./utils/request";
 
+import { ROLE_MAPPING } from "./config/roles";
 import { createSession } from "./services/session";
 import { getDirectusServices } from "./services/directus";
 import { logger } from "./utils/logger";
 import { processHasuraToken } from "./auth/hasura";
+import { validateAndMapRole } from "./services/role";
 
 export default {
   id: "hasura-sso-bridge",
