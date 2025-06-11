@@ -2,7 +2,7 @@
 	"name": "@mayademcom/directus-extension-hasura-sso-bridge",
 	"description": "Seamless SSO bridge between Hasura and Directus admin panel.",
 	"icon": "extension",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"author": "Mayadem",
 	"license": "MIT",
 	"readmeFilename": "README.md",
