@@ -18,12 +18,12 @@ export function getClientIP(req: Request): string {
 }
 
 export function getOrigin(req: Request): string {
-  return (
+  const origin =
     req.headers.origin ??
     req.headers.referer ??
-    `${req.protocol}://${req.get("host")}` ??
-    DEFAULT_ORIGIN
-  );
+    `${req.protocol}://${req.get("host")}`;
+
+  return origin ?? DEFAULT_ORIGIN;
 }
 
 export function getUserAgent(req: Request): string {
