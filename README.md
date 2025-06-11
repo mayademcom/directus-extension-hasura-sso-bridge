@@ -138,7 +138,7 @@ html
 
 <!-- Example: Direct link -->
 
-<a href="https://your-directus.com/hasura-sso-bridge?token=YOUR_TOKEN" 
+<a href="https://your-directus.com/hasura-sso-bridge?token=YOUR_TOKEN"
        target="_blank">
 Open Content Management
 </a>
@@ -147,20 +147,20 @@ Open Content Management
 ### React Integration
 
 ```jsx
-import { useAuthToken } from './hooks/useAuth';
-    function CMSAccessButton() {
-      const { hasuraToken } = useAuthToken();
-      const openCMS = () => {
-        const ssoUrl = `${process.env.REACT_APP_DIRECTUS_URL}/hasura-sso-bridge?token=${hasuraToken}`;
-        window.open(ssoUrl, '_blank');
-      };
+import { useAuthToken } from "./hooks/useAuth";
+function CMSAccessButton() {
+  const { hasuraToken } = useAuthToken();
+  const openCMS = () => {
+    const ssoUrl = `${process.env.REACT_APP_DIRECTUS_URL}/hasura-sso-bridge?token=${hasuraToken}`;
+    window.open(ssoUrl, "_blank");
+  };
 
-      return (
-        <button onClick={openCMS} className="btn-primary">
-          Open Content Management
-        </button>
-      );
-    }
+  return (
+    <button onClick={openCMS} className="btn-primary">
+      Open Content Management
+    </button>
+  );
+}
 ```
 
 ### API Integration
@@ -181,15 +181,15 @@ Your Hasura JWT must include these claims:
 
 ```json
 {
-    "sub": "user-id-123",
-    "email": "user@example.com",
-    "first_name": "John",
-    "last_name": "Doe",
-    "https://hasura.io/jwt/claims": {
-        "x-hasura-user-id": "user-id-123",
-        "x-hasura-default-role": "editor",
-        "x-hasura-allowed-roles": ["editor"]
-    }
+  "sub": "user-id-123",
+  "email": "user@example.com",
+  "first_name": "John",
+  "last_name": "Doe",
+  "https://hasura.io/jwt/claims": {
+    "x-hasura-user-id": "user-id-123",
+    "x-hasura-default-role": "editor",
+    "x-hasura-allowed-roles": ["editor"]
+  }
 }
 ```
 
