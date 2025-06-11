@@ -3,6 +3,7 @@
 > Seamless single sign-on integration between Hasura and Directus admin panel
 
 [![npm version](https://img.shields.io/npm/v/directus-extension-hasura-sso-bridge.svg?style=flat-square)](https://www.npmjs.com/package/directus-extension-hasura-sso-bridge)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mayademcom_directus-extension-hasura-sso-bridge&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mayademcom_directus-extension-hasura-sso-bridge)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Directus](https://img.shields.io/badge/Directus-263238?style=flat-square&logo=directus&logoColor=white)](https://directus.io/)
 [![Hasura](https://img.shields.io/badge/Hasura-1EB4D4?style=flat-square&logo=hasura&logoColor=white)](https://hasura.io/)
