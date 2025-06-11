@@ -36,7 +36,7 @@ export default {
         const roleValidation = validateAndMapRole(userInfo.hasuraRole);
         if (!roleValidation.isValid || !roleValidation.mappedRole) {
           throw new Error(
-            roleValidation.error ||
+            roleValidation.error ??
               `Invalid Directus role: ${userInfo.hasuraRole}`
           );
         }
