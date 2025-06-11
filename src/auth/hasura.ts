@@ -41,7 +41,7 @@ export function extractUserInfo(decoded: HasuraJWTPayload): HasuraUserInfo {
       throw new HasuraAuthError("Missing Hasura claims in token");
     }
 
-    const userId = hasuraClaims["x-hasura-user-id"];
+    const userId = hasuraClaims["x-hasura-user-id"] || decoded.sub;
     const hasuraRole =
       hasuraClaims["x-hasura-role"] ?? hasuraClaims["x-hasura-default-role"];
     const email = decoded.email;
