@@ -30,7 +30,7 @@ export interface DirectusUserData {
 
 // Directus Service Types
 export interface DirectusServicesContext {
-  usersService: any; // TODO: Add proper Directus types when available
+  usersService: any;
   rolesService: any;
   database: any;
 }
