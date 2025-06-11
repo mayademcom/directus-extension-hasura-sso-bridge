@@ -327,17 +327,10 @@ curl http://localhost:8055/hasura-sso-bridge/health
 ### Release Process
 
 ```bash
-# Update version
-npm version patch|minor|major
+# Release in both NPM and Github
+npm run release
 
-# Build for production
-npm run build
 
-# Publish to npm
-npm publish
-
-# Create GitHub release
-git push --tags
 ```
 
 ## 🚨 Troubleshooting
