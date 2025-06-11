@@ -37,15 +37,16 @@
 	},
 	"devDependencies": {
 		"@directus/extensions-sdk": "13.1.1",
+		"@release-it/conventional-changelog": "^10.0.1",
 		"@types/express": "^5.0.3",
 		"@types/jsonwebtoken": "^9.0.0",
 		"@types/node": "^24.0.0",
+		"conventional-changelog-cli": "^5.0.0",
+		"release-it": "^19.0.3",
 		"typescript": "^5.8.3"
 	},
 	"dependencies": {
-		"@release-it/conventional-changelog": "^10.0.1",
 		"express": "^5.1.0",
-		"jsonwebtoken": "^9.0.2",
-		"release-it": "^19.0.3"
+		"jsonwebtoken": "^9.0.2"
 	}
 }
