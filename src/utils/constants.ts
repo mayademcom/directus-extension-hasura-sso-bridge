@@ -1,5 +1,10 @@
-export const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
-export const SESSION_DURATION_SECONDS = 24 * 60 * 60; // 24 hours
+const SESSION_DURATION_HOURS = parseInt(
+  process.env.SESSION_DURATION_HOURS ?? "24",
+  10
+);
+
+export const SESSION_DURATION_MS = SESSION_DURATION_HOURS * 60 * 60 * 1000;
+export const SESSION_DURATION_SECONDS = SESSION_DURATION_HOURS * 60 * 60;
 
 export const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -9,7 +14,7 @@ export const COOKIE_OPTIONS = {
   path: "/",
 };
 
-export const USER_AGENT = "hasura-admin-auto-login-extension";
+export const USER_AGENT = "directus-extension-hasura-sso-bridge";
 
 export const DEFAULT_IP = "127.0.0.1";
 export const DEFAULT_ORIGIN = "unknown";

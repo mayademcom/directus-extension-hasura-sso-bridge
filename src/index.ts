@@ -8,6 +8,7 @@ import {
 } from "./auth/directus";
 import { getClientIP, getOrigin } from "./utils/request";
 
+import { COOKIE_OPTIONS } from "./utils/constants";
 import { ROLE_MAPPING } from "./config/roles";
 import { createSession } from "./services/session";
 import { getDirectusServices } from "./services/directus";
@@ -120,7 +121,7 @@ export default {
           res.json({
             supportedRoles: Object.keys(ROLE_MAPPING),
             environment: process.env.NODE_ENV,
-            features: ["jwt-auth", "role-mapping", "auto-provisioning"],
+            cookieOptions: COOKIE_OPTIONS,
           });
         } catch (error) {
           logger.error("Config endpoint failed", error);
