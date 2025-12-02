@@ -118,60 +118,145 @@ curl http://localhost:8055/hasura-sso-bridge/health
 
 ### Basic Usage
 
-1. **Get Hasura JWT Token** from your application
+1. **Set Hasura JWT Token as Cookie** in your application
 
-2. **Navigate to SSO endpoint** with token parameter:
-   GET https://your-directus.com/hasura-sso-bridge?token=YOUR_HASURA_JWT
+```javascript
+// Set the Authorization cookie with your Hasura token
+document.cookie = `Authorization=${hasuraToken}; path=/; SameSite=Lax; Secure`;
+```
+
+2. **Navigate to SSO endpoint** (no token parameter needed):
+
+```
+   GET https://your-directus.com/hasura-sso-bridge
+```
 
 3. **Automatic redirect** to Directus admin panel with authenticated session
 
 ### Frontend Integration
 
 ```javascript
-// Example: Auto-redirect button
+// Example: Auto-redirect button with cookie
 function openDirectusAdmin() {
-const hasuraToken = getHasuraToken(); // Your token retrieval logic
-const ssoUrl = `https://your-directus.com/hasura-sso-bridge?token=${encodeURIComponent(hasuraToken)}`;
-      window.open(ssoUrl, '_blank');
-    }
+  const hasuraToken = getHasuraToken(); // Your token retrieval logic
 
-html
+  // Set token as cookie
+  document.cookie = `Authorization=${hasuraToken}; path=/; SameSite=Lax; Secure`;
 
-<!-- Example: Direct link -->
+  // Redirect to SSO endpoint
+  const ssoUrl = "https://your-directus.com/hasura-sso-bridge";
+  window.open(ssoUrl, "_blank");
+}
 
-<a href="https://your-directus.com/hasura-sso-bridge?token=YOUR_TOKEN"
-       target="_blank">
+// Example: Using fetch with credentials
+async function openDirectusAdminWithFetch() {
+  const hasuraToken = getHasuraToken();
+
+  // Set cookie
+  document.cookie = `Authorization=${hasuraToken}; path=/; SameSite=Lax; Secure`;
+
+  // Open in new window
+  window.open("https://your-directus.com/hasura-sso-bridge", "_blank");
+}
+```
+
+```html
 Open Content Management
-</a>
 ```
 
 ### React Integration
 
 ```jsx
 import { useAuthToken } from "./hooks/useAuth";
+
 function CMSAccessButton() {
   const { hasuraToken } = useAuthToken();
+
   const openCMS = () => {
-    const ssoUrl = `${process.env.REACT_APP_DIRECTUS_URL}/hasura-sso-bridge?token=${hasuraToken}`;
-    window.open(ssoUrl, "_blank");
+    // Set Hasura token as cookie
+    document.cookie = `Authorization=${hasuraToken}; path=/; SameSite=Lax; Secure`;
+
+    // Open SSO endpoint
+    const ssoUrl = `${process.env.REACT_APP_DIRECTUS_URL}/hasura-sso-bridge`;
+    window.open(ssoUrl, '_blank');
   };
 
   return (
-    <button onClick={openCMS} className="btn-primary">
+
       Open Content Management
-    </button>
+
   );
+}
+```
+
+### Advanced: Using Fetch API
+
+```javascript
+// If you need more control, use fetch with credentials
+async function authenticateWithDirectus() {
+  const hasuraToken = getHasuraToken();
+
+  // Set cookie first
+  document.cookie = `Authorization=${hasuraToken}; path=/; SameSite=Lax; Secure`;
+
+  try {
+    // Call SSO endpoint with credentials
+    const response = await fetch(
+      `${process.env.REACT_APP_DIRECTUS_URL}/hasura-sso-bridge`,
+      {
+        method: "GET",
+        credentials: "include", // Important: Include cookies
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (response.redirected) {
+      // Successfully authenticated, redirect to admin
+      window.location.href = response.url;
+    }
+  } catch (error) {
+    console.error("Authentication failed:", error);
+  }
 }
 ```
 
 ### API Integration
 
 ```bash
+# Direct API call with cookie
+curl "https://your-directus.com/hasura-sso-bridge" \
+  -H "Cookie: Authorization=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..." \
+  -L  # Follow redirects
 
-# Direct API call
-curl "https://your-directus.com/hasura-sso-bridge?token=eyJ0eXAiOiJKV1Q..."
-    # Response: 302 Redirect to /admin/content with authenticated session
+# Response: 302 Redirect to /admin/content with authenticated session
 
+# Test without authentication (should return 401)
+curl "https://your-directus.com/hasura-sso-bridge" -v
+# Response: 401 Unauthorized
+```
+
+### Security Notes
+
+- **Cookie Security**: The extension reads the Hasura JWT token from the `Authorization` cookie, not from URL parameters
+- **Credentials Required**: Frontend requests must include `credentials: 'include'` to send cookies
+- **HTTPS Recommended**: Use `Secure` flag in production to ensure cookies are only sent over HTTPS
+- **SameSite Protection**: Set `SameSite=Lax` or `SameSite=Strict` to prevent CSRF attacks
+- **No Token in URL**: Tokens are never exposed in URLs, browser history, or server logs
+
+### Cookie Configuration
+
+```javascript
+// Development (HTTP)
+document.cookie = `Authorization=${token}; path=/; SameSite=Lax`;
+
+// Production (HTTPS)
+document.cookie = `Authorization=${token}; path=/; SameSite=Lax; Secure`;
+
+// With expiration (optional)
+const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+document.cookie = `Authorization=${token}; path=/; SameSite=Lax; Secure; expires=${expires.toUTCString()}`;
 ```
 
 ## 🔐 Security & Authentication
