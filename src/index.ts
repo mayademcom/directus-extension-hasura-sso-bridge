@@ -6,7 +6,11 @@ import {
   saveDirectusToken,
   signDirectusToken,
 } from "./auth/directus";
-import { getClientIP, getOrigin } from "./utils/request";
+import {
+  getAuthTokenFromCookie,
+  getClientIP,
+  getOrigin,
+} from "./utils/request";
 
 import { COOKIE_OPTIONS } from "./utils/constants";
 import { ROLE_MAPPING } from "./config/roles";
@@ -27,10 +31,15 @@ export default {
         // Initialize services
         const services = await getDirectusServices(context);
 
+        const token = getAuthTokenFromCookie(req);
+
+        if (!token) {
+          logger.error("Authorization cookie not found");
+          throw new Error("Authorization cookie not found");
+        }
+
         // Process Hasura authentication
-        const userInfo: HasuraUserInfo = processHasuraToken(
-          req.query.token as string
-        );
+        const userInfo: HasuraUserInfo = processHasuraToken(token);
 
         // Validate and map role
         const roleValidation = validateAndMapRole(userInfo.hasuraRole);

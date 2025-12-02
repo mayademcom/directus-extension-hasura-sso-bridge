@@ -29,3 +29,20 @@ export function getOrigin(req: Request): string {
 export function getUserAgent(req: Request): string {
   return req.headers["user-agent"] ?? "unknown";
 }
+
+export function getAuthTokenFromCookie(req: Request): string | null {
+  const cookieHeader = req.headers.cookie;
+
+  if (!cookieHeader) {
+    return null;
+  }
+
+  // Parse cookies
+  const cookies = cookieHeader.split(";").reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split("=");
+    acc[key] = value;
+    return acc;
+  }, {} as Record<string, string>);
+
+  return cookies["Authorization"] || null;
+}
