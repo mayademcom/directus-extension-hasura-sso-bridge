@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.1.2](/compare/v1.1.1...v1.1.2) (2025-12-02)
+
 ## [1.1.1](https://github.com/mayademcom/directus-extension-hasura-sso-bridge/compare/v1.0.0...v1.1.1) (2025-07-24)
 
 
